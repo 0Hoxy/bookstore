@@ -8,6 +8,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Table(name = "author")
 public class Author {
 
     @Id

@@ -12,13 +12,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 @SpringBootTest
-@ActiveProfiles("test") //used test properties
+@ActiveProfiles("test")//used test properties
+@Transactional
 class BookServiceTest {
     @Autowired
     private BookService bookService;
@@ -34,7 +36,6 @@ class BookServiceTest {
     void testSaveBook() {
         Author author = new Author();
         author.setName("DM Kim");
-        author.setBiography("alive");
         authorRepository.save(author);
 
         Category category = new Category();
