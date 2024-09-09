@@ -1,6 +1,8 @@
 package com.hoxy.bookstore.service;
 
+import com.hoxy.bookstore.entity.Author;
 import com.hoxy.bookstore.entity.Book;
+import com.hoxy.bookstore.entity.Category;
 import com.hoxy.bookstore.repository.AuthorRepository;
 import com.hoxy.bookstore.repository.BookRepository;
 import com.hoxy.bookstore.repository.CategoryRepository;
@@ -22,8 +24,8 @@ public class BookService {
     private CategoryRepository categoryRepository;
 
     @Transactional
-    public void saveBook(Book book) {
-        bookRepository.save(book);
+    public Book saveBook(Book book) {
+        return bookRepository.save(book);
     }
 
     @Transactional(readOnly = true)
@@ -39,16 +41,28 @@ public class BookService {
 
     @Transactional
     public Book updateBook(Long id, Book updateBookData) {
-        // 기존 책을 데이터베이스에서 찾습니다.
+        // Find the existing book in the database
         Book existingBook = bookRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + id));
 
+        // Update title and price
         existingBook.setTitle(updateBookData.getTitle());
-        existingBook.setAuthor(updateBookData.getAuthor());
         existingBook.setPrice(updateBookData.getPrice());
-        existingBook.setCategory(updateBookData.getCategory()); // authorRepo 사용으로 수정
-        existingBook.setCategory(updateBookData.getCategory()); // categoryRepo 사용으로 수정
+
+        // Update author using authorRepository
+        Author author = authorRepository.findById(updateBookData.getAuthor().getId())
+                .orElseThrow(() -> new EntityNotFoundException("Author not found with id: " + updateBookData.getAuthor().getId()));
+        existingBook.setAuthor(author);
+
+        // Update category using categoryRepository
+        Category category = categoryRepository.findById(updateBookData.getCategory().getId())
+                .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + updateBookData.getCategory().getId()));
+        existingBook.setCategory(category);
+
+        // Save updated book to the repository
         bookRepository.save(existingBook);
+
         return existingBook;
     }
+
 }
