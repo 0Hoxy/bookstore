@@ -9,11 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookDTO {
+public class StockDTO {
     private Long id;
-    private String title;
-    private int price;
-    private AuthorDTO author;  // 변경
-    private CategoryDTO category;  // 변경
-    private StockDTO stock;  // 변경
+    private Integer quantity;
 }

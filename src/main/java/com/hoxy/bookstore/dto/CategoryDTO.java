@@ -1,19 +1,18 @@
 package com.hoxy.bookstore.dto;
 
+import com.hoxy.bookstore.entity.Book;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookDTO {
+public class CategoryDTO {
     private Long id;
-    private String title;
-    private int price;
-    private AuthorDTO author;  // 변경
-    private CategoryDTO category;  // 변경
-    private StockDTO stock;  // 변경
+    private String name;
 }
